@@ -47,9 +47,9 @@
   --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   /* ── Shadows ─── */
-  --shadow-soft: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.08);
   --shadow-warm: 0 4px 30px rgba(201, 168, 76, 0.15);
-  --shadow-deep: 0 8px 40px rgba(0,0,0,0.25);
+  --shadow-deep: 0 8px 40px rgba(0, 0, 0, 0.25);
 }
 
 /* ── Reset ─── */
@@ -61,7 +61,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -78,73 +79,209 @@ body {
 /* ── Global animation keyframes ─── */
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
-  25% { opacity: 0.92; }
-  75% { opacity: 0.88; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+
+  25% {
+    opacity: 0.92;
+  }
+
+  75% {
+    opacity: 0.88;
+  }
 }
 
 @keyframes driftSmoke {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
-  50% { transform: translateY(-40px) translateX(10px) scale(1.3); opacity: 0.3; }
-  100% { transform: translateY(-80px) translateX(-5px) scale(1.6); opacity: 0; }
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-40px) translateX(10px) scale(1.3);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(-80px) translateX(-5px) scale(1.6);
+    opacity: 0;
+  }
 }
 
 @keyframes snowfall {
-  0% { transform: translateY(-10px) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 0.7; }
-  100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
+  0% {
+    transform: translateY(-10px) translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateY(100vh) translateX(30px);
+    opacity: 0;
+  }
 }
 
 @keyframes gentlePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes warmGlow {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.1); }
+
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.1);
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes letterFold {
-  0% { transform: perspective(800px) rotateX(0deg); }
-  100% { transform: perspective(800px) rotateX(-180deg); }
+  0% {
+    transform: perspective(800px) rotateX(0deg);
+  }
+
+  100% {
+    transform: perspective(800px) rotateX(-180deg);
+  }
 }
 
 @keyframes sealBloom {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes envelopeFloat {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
-  50% { transform: translateY(-100px) translateX(50px) scale(0.8); opacity: 0.8; }
-  100% { transform: translateY(-300px) translateX(200px) scale(0.3); opacity: 0; }
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-100px) translateX(50px) scale(0.8);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-300px) translateX(200px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes stamperPress {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  40% {
+    transform: translateX(-50%) translateY(120px);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(115px);
+  }
+
+  60% {
+    transform: translateX(-50%) translateY(120px);
+  }
+
+  80% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0;
+  }
 }

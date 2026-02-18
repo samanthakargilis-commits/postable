@@ -16,47 +16,60 @@ const VIBES = [
 ];
 
 const STICKERS = [
-    { id: 's1', emoji: '🌹', label: 'Rose' },
-    { id: 's2', emoji: '🦋', label: 'Butterfly' },
-    { id: 's3', emoji: '🌻', label: 'Sunflower' },
-    { id: 's4', emoji: '☕', label: 'Tea' },
-    { id: 's5', emoji: '🍰', label: 'Cake' },
-    { id: 's6', emoji: '🌙', label: 'Moon' },
-    { id: 's7', emoji: '🕊️', label: 'Dove' },
-    { id: 's8', emoji: '🎀', label: 'Ribbon' },
-    { id: 's9', emoji: '🌿', label: 'Leaf' },
-    { id: 's10', emoji: '💐', label: 'Bouquet' },
-    { id: 's11', emoji: '🧸', label: 'Bear' },
-    { id: 's12', emoji: '🍓', label: 'Strawberry' },
+    { id: 's1', type: 'image', label: 'Rose', imageUrl: '/stickers/rose.png' },
+    { id: 's2', type: 'image', label: 'Butterfly', imageUrl: '/stickers/butterfly.png' },
+    { id: 's3', type: 'image', label: 'Sunflower', imageUrl: '/stickers/sunflower.png' },
+    { id: 's4', type: 'image', label: 'Teacup', imageUrl: '/stickers/teacup.png' },
+    { id: 's5', type: 'image', label: 'Strawberry', imageUrl: '/stickers/strawberry.png' },
+    { id: 's6', type: 'image', label: 'Bouquet', imageUrl: '/stickers/bouquet.png' },
+    { id: 's7', type: 'image', label: 'Robin', imageUrl: '/stickers/bird.png' },
+    { id: 's8', type: 'image', label: 'Figs', imageUrl: '/stickers/fig.png' },
+    { id: 's9', type: 'image', label: 'Candles', imageUrl: '/stickers/candles.png' },
+    { id: 's10', type: 'image', label: 'Lemon', imageUrl: '/stickers/lemon.png' },
+    { id: 's11', type: 'image', label: 'Olive Oil', imageUrl: '/stickers/olive-oil.png' },
+    { id: 'custom', type: 'custom', label: 'Custom...', emoji: '✏️' },
+    { id: 'upload', type: 'upload', label: 'Upload', emoji: '📸' },
 ];
 
 const STAMPS = [
-    { id: 'wax-red', label: 'Ruby Wax', color: '#8a2030', symbol: '♥' },
-    { id: 'wax-gold', label: 'Gold Wax', color: '#c9a84c', symbol: '✦' },
-    { id: 'wax-sage', label: 'Sage Wax', color: '#6e8a5a', symbol: '✿' },
-    { id: 'wax-plum', label: 'Plum Wax', color: '#5c3a4a', symbol: '✧' },
-    { id: 'wax-pink', label: 'Blush Wax', color: '#c07878', symbol: '❀' },
-    { id: 'wax-navy', label: 'Navy Wax', color: '#2a3a5a', symbol: '⚜' },
+    { id: 'wax-red', label: 'Ruby Wax', color: '#8a2030', symbol: '♥', isCustom: false },
+    { id: 'wax-gold', label: 'Gold Wax', color: '#c9a84c', symbol: '✦', isCustom: false },
+    { id: 'wax-sage', label: 'Sage Wax', color: '#6e8a5a', symbol: '✿', isCustom: false },
+    { id: 'wax-plum', label: 'Plum Wax', color: '#5c3a4a', symbol: '✧', isCustom: false },
+    { id: 'wax-pink', label: 'Blush Wax', color: '#c07878', symbol: '❀', isCustom: false },
+    { id: 'wax-navy', label: 'Navy Wax', color: '#2a3a5a', symbol: '⚜', isCustom: false },
+    { id: 'custom-stamp', label: 'Custom', color: '#4a3a3a', symbol: '?', isCustom: true },
 ];
 
 const ENVELOPE_STYLES = [
-    { id: 'cream', label: 'Cream', bg: 'linear-gradient(135deg, #f5efe6, #e8dcc8)', inner: '#dccab0' },
-    { id: 'blush', label: 'Blush', bg: 'linear-gradient(135deg, #f0d0d0, #e8b8b8)', inner: '#daa8a8' },
-    { id: 'sage', label: 'Sage', bg: 'linear-gradient(135deg, #d0dcc8, #b8c8a8)', inner: '#a8b898' },
-    { id: 'midnight', label: 'Midnight', bg: 'linear-gradient(135deg, #2a2a4e, #1a1a3a)', inner: '#3a3a5e' },
+    { id: 'cream', label: 'Cream', bg: 'linear-gradient(135deg, #f5efe6, #e8dcc8)', inner: '#dccab0', isDark: false },
+    { id: 'blush', label: 'Blush', bg: 'linear-gradient(135deg, #f0d0d0, #e8b8b8)', inner: '#daa8a8', isDark: false },
+    { id: 'sage', label: 'Sage', bg: 'linear-gradient(135deg, #d0dcc8, #b8c8a8)', inner: '#a8b898', isDark: false },
+    { id: 'midnight', label: 'Midnight', bg: 'linear-gradient(135deg, #2a2a4e, #1a1a3a)', inner: '#3a3a5e', isDark: true },
 ];
+
+type StickerData = {
+    id: string;
+    type: string;
+    label: string;
+    imageUrl?: string;
+    emoji?: string;
+};
 
 type PlacedSticker = {
     id: string;
     stickerId: string;
-    emoji: string;
+    type: string;
+    imageUrl?: string;
+    emoji?: string;
+    customText?: string;
     x: number;
     y: number;
     rotation: number;
     scale: number;
 };
 
-type ViewMode = 'letter' | 'envelope' | 'sending' | 'sent';
+type ViewMode = 'letter' | 'chooseEnvelope' | 'chooseSeal' | 'sending' | 'sent';
 
 export default function CreatePage() {
     const [selectedVibe, setSelectedVibe] = useState(VIBES[0]);
@@ -71,12 +84,25 @@ export default function CreatePage() {
     const [roomLoaded, setRoomLoaded] = useState(false);
     const [aiArtReady, setAiArtReady] = useState(false);
     const [birdVisible, setBirdVisible] = useState(false);
-    const [draggedSticker, setDraggedSticker] = useState<{ emoji: string; id: string } | null>(null);
+    const [draggedSticker, setDraggedSticker] = useState<StickerData | null>(null);
+    const [draggingPlacedId, setDraggingPlacedId] = useState<string | null>(null);
     const [sealPressed, setSealPressed] = useState(false);
-    const [sendPhase, setSendPhase] = useState(0); // 0: fold, 1: seal, 2: float, 3: done
+    const [sendPhase, setSendPhase] = useState(0);
+    const [stamperActive, setStamperActive] = useState(false);
+
+    // Recipient contact
+    const [recipientContact, setRecipientContact] = useState('');
+    const [contactType, setContactType] = useState<'email' | 'phone'>('email');
+
+    // Custom options
+    const [customEnvelopeText, setCustomEnvelopeText] = useState('');
+    const [customSealText, setCustomSealText] = useState('');
+    const [showCustomStickerInput, setShowCustomStickerInput] = useState(false);
+    const [customStickerText, setCustomStickerText] = useState('');
 
     const canvasRef = useRef<HTMLDivElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const t = setTimeout(() => setRoomLoaded(true), 300);
@@ -96,21 +122,42 @@ export default function CreatePage() {
     }, [letterText, aiArtReady]);
 
     /* ── Sticker drag & drop ─── */
-    const handleStickerDragStart = useCallback((sticker: { id: string; emoji: string }) => {
+    const handleStickerDragStart = useCallback((sticker: StickerData) => {
+        if (sticker.id === 'upload') {
+            fileInputRef.current?.click();
+            return;
+        }
+        if (sticker.id === 'custom') {
+            setShowCustomStickerInput(true);
+            return;
+        }
         setDraggedSticker(sticker);
     }, []);
 
     const handleCanvasDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
-        if (!draggedSticker || !canvasRef.current) return;
+        if (!canvasRef.current) return;
 
         const rect = canvasRef.current.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
 
+        // Re-positioning an already placed sticker
+        if (draggingPlacedId) {
+            setPlacedStickers(prev => prev.map(s =>
+                s.id === draggingPlacedId ? { ...s, x, y } : s
+            ));
+            setDraggingPlacedId(null);
+            return;
+        }
+
+        if (!draggedSticker) return;
+
         setPlacedStickers(prev => [...prev, {
             id: `placed-${Date.now()}`,
             stickerId: draggedSticker.id,
+            type: draggedSticker.type,
+            imageUrl: draggedSticker.imageUrl,
             emoji: draggedSticker.emoji,
             x,
             y,
@@ -118,34 +165,69 @@ export default function CreatePage() {
             scale: 0.9 + Math.random() * 0.3,
         }]);
         setDraggedSticker(null);
-    }, [draggedSticker]);
+    }, [draggedSticker, draggingPlacedId]);
 
     const handleCanvasDragOver = useCallback((e: React.DragEvent) => {
         e.preventDefault();
+    }, []);
+
+    const handlePlacedStickerDragStart = useCallback((e: React.DragEvent, stickerId: string) => {
+        setDraggingPlacedId(stickerId);
+        // Make the drag preview transparent
+        const img = new Image();
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        e.dataTransfer.setDragImage(img, 0, 0);
     }, []);
 
     const removeSticker = useCallback((id: string) => {
         setPlacedStickers(prev => prev.filter(s => s.id !== id));
     }, []);
 
+    const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const url = ev.target?.result as string;
+            setDraggedSticker({ id: 'uploaded-' + Date.now(), type: 'upload', label: 'Uploaded', imageUrl: url });
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
+    }, []);
+
+    const handleCustomStickerAdd = useCallback(() => {
+        if (!customStickerText.trim()) return;
+        setDraggedSticker({ id: 'custom-' + Date.now(), type: 'custom', label: customStickerText, emoji: customStickerText });
+        setShowCustomStickerInput(false);
+        setCustomStickerText('');
+    }, [customStickerText]);
+
     /* ── Send Flow ─── */
     const handleSend = useCallback(() => {
-        if (!letterText.trim() || !recipientName.trim()) return;
+        if (!letterText.trim() || !recipientName.trim() || !recipientContact.trim()) return;
         setViewMode('sending');
         setSendPhase(0);
 
-        // Letter fold
         setTimeout(() => setSendPhase(1), 1500);
-        // Seal bloom
         setTimeout(() => {
             setSealPressed(true);
             setSendPhase(2);
         }, 3000);
-        // Float away
         setTimeout(() => setSendPhase(3), 4500);
-        // Final screen
         setTimeout(() => setViewMode('sent'), 6500);
-    }, [letterText, recipientName]);
+    }, [letterText, recipientName, recipientContact]);
+
+    const handleStampSeal = useCallback(() => {
+        setStamperActive(true);
+        setTimeout(() => {
+            setSealPressed(true);
+            setStamperActive(false);
+        }, 1000);
+    }, []);
+
+    const isDarkEnvelope = useCallback(() => {
+        return selectedEnvelope.isDark || (selectedEnvelope.id === 'custom' && customEnvelopeText.toLowerCase().match(/dark|midnight|navy|black|deep/));
+    }, [selectedEnvelope, customEnvelopeText]);
 
     /* ── Vibe-dependent room styles ─── */
     const getVibeRoomClass = () => {
@@ -158,7 +240,6 @@ export default function CreatePage() {
         }
     };
 
-    /* ── Stationery style per vibe ─── */
     const getStationeryStyle = () => {
         switch (selectedVibe.id) {
             case 'love': return { borderColor: '#d4a0a088', background: 'linear-gradient(180deg, #fdf5f5, #f8e8e8)' };
@@ -170,6 +251,28 @@ export default function CreatePage() {
         }
     };
 
+    /* ── Render Sticker on Canvas ─── */
+    const renderPlacedSticker = (s: PlacedSticker) => {
+        if (s.type === 'image' || s.type === 'upload') {
+            return (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                    src={s.imageUrl}
+                    alt={s.stickerId}
+                    className={`${styles.stickerImage} ${s.type === 'upload' ? styles.stickerImageUpload : ''}`}
+                    draggable={false}
+                />
+            );
+        }
+        if (s.type === 'custom') {
+            return <span className={styles.customStickerText}>{s.emoji}</span>;
+        }
+        return <span>{s.emoji || '✨'}</span>;
+    };
+
+    /* ══════════════════════════════════
+       SENT SCREEN
+       ══════════════════════════════════ */
     if (viewMode === 'sent') {
         return (
             <div className={styles.sentScreen}>
@@ -194,11 +297,13 @@ export default function CreatePage() {
                 <div className={styles.sentContent}>
                     <p className={styles.sentMessage}>Your letter is on its way</p>
                     <p className={styles.sentRecipient}>To {recipientName}</p>
+                    <p className={styles.sentContact}>via {contactType}: {recipientContact}</p>
                     <p className={styles.sentTimer}>Arriving in 24 hours</p>
                     <button className={styles.sentButton} onClick={() => {
                         setViewMode('letter');
                         setLetterText('');
                         setRecipientName('');
+                        setRecipientContact('');
                         setPlacedStickers([]);
                         setAiArtReady(false);
                         setSealPressed(false);
@@ -243,7 +348,6 @@ export default function CreatePage() {
                     </div>
                 </div>
 
-                {/* Tea cup */}
                 <div className={styles.teaCup}>
                     <div className={styles.teaSteam}>
                         <div className={styles.steamLine} style={{ animationDelay: '0s' }} />
@@ -252,12 +356,10 @@ export default function CreatePage() {
                     </div>
                 </div>
 
-                {/* AI art bird */}
                 <div className={`${styles.bird} ${birdVisible ? styles.birdVisible : ''}`}>
                     🐦
                 </div>
 
-                {/* Lamp */}
                 <div className={styles.deskLamp}>
                     <div className={styles.lampGlow} />
                 </div>
@@ -320,7 +422,7 @@ export default function CreatePage() {
                                 onChange={e => setLetterText(e.target.value)}
                             />
 
-                            {/* Placed stickers */}
+                            {/* Placed stickers — now draggable */}
                             {placedStickers.map(s => (
                                 <div
                                     key={s.id}
@@ -330,10 +432,18 @@ export default function CreatePage() {
                                         top: `${s.y}%`,
                                         transform: `translate(-50%, -50%) rotate(${s.rotation}deg) scale(${s.scale})`,
                                     }}
-                                    onClick={() => removeSticker(s.id)}
-                                    title="Click to remove"
+                                    draggable
+                                    onDragStart={(e) => handlePlacedStickerDragStart(e, s.id)}
+                                    title="Drag to move"
                                 >
-                                    {s.emoji}
+                                    {renderPlacedSticker(s)}
+                                    <button
+                                        className={styles.stickerRemoveBtn}
+                                        onClick={(e) => { e.stopPropagation(); removeSticker(s.id); }}
+                                        title="Remove sticker"
+                                    >
+                                        ✕
+                                    </button>
                                 </div>
                             ))}
 
@@ -347,35 +457,40 @@ export default function CreatePage() {
                         <div className={styles.actionBar}>
                             <button
                                 className={styles.actionBtn}
-                                onClick={() => setViewMode('envelope')}
+                                onClick={() => setViewMode('chooseEnvelope')}
                                 disabled={!letterText.trim() || !recipientName.trim()}
                             >
-                                <span>✉</span> Seal & Send
+                                <span>✉</span> Design Your Envelope
                             </button>
                         </div>
                     </>
                 )}
 
-                {viewMode === 'envelope' && (
+                {/* ══════════════════════════════════
+                   STEP 1: CHOOSE ENVELOPE
+                   ══════════════════════════════════ */}
+                {viewMode === 'chooseEnvelope' && (
                     <div className={styles.envelopeView}>
+                        <div className={styles.envelopeFlowSteps}>
+                            <div className={`${styles.stepIndicator} ${styles.stepActive}`}>1. Envelope</div>
+                            <div className={styles.stepIndicator}>2. Address</div>
+                            <div className={styles.stepIndicator}>3. Seal</div>
+                        </div>
+
+                        {/* Envelope preview — OPEN */}
                         <div
-                            className={styles.envelope}
-                            style={{ background: selectedEnvelope.bg }}
+                            className={`${styles.envelope} ${styles.envelopeOpen}`}
+                            style={{
+                                background: selectedEnvelope.id === 'custom' && customEnvelopeText
+                                    ? `linear-gradient(135deg, #4a4a4a, #2a2a2a)`
+                                    : selectedEnvelope.bg
+                            }}
                         >
                             <div className={styles.envelopeFlap} style={{ borderBottomColor: selectedEnvelope.inner }} />
                             <div className={styles.envelopeFront}>
-                                <p className={styles.envelopeTo}>{recipientName}</p>
-                                {selectedStamp && (
-                                    <div
-                                        className={`${styles.envelopeSeal} ${sealPressed ? styles.sealBloomed : ''}`}
-                                        style={{ background: selectedStamp.color }}
-                                        onClick={() => setSealPressed(!sealPressed)}
-                                    >
-                                        <span>{selectedStamp.symbol}</span>
-                                    </div>
-                                )}
+                                <p className={`${styles.envelopeTo} ${isDarkEnvelope() ? styles.envelopeToLight : ''}`}>{recipientName}</p>
                             </div>
-                            <p className={styles.envelopeSubtext}>
+                            <p className={`${styles.envelopeSubtext} ${isDarkEnvelope() ? styles.envelopeSubtextLight : ''}`}>
                                 A letter from you • Arriving in 24 hours
                             </p>
                         </div>
@@ -393,20 +508,158 @@ export default function CreatePage() {
                                         title={env.label}
                                     />
                                 ))}
+                                <button
+                                    className={`${styles.envelopeOption} ${styles.envelopeOptionCustom} ${selectedEnvelope.id === 'custom' ? styles.envelopeOptionActive : ''}`}
+                                    onClick={() => setSelectedEnvelope({ id: 'custom', label: 'Custom', bg: '#4a4a4a', inner: '#3a3a3a', isDark: true })}
+                                    title="Custom"
+                                >
+                                    ?
+                                </button>
                             </div>
+                            {selectedEnvelope.id === 'custom' && (
+                                <input
+                                    className={styles.customTextInput}
+                                    placeholder="Describe your envelope (e.g. 'Deep ocean blue')..."
+                                    value={customEnvelopeText}
+                                    onChange={e => setCustomEnvelopeText(e.target.value)}
+                                />
+                            )}
                         </div>
 
                         <div className={styles.envelopeActions}>
                             <button className={styles.backBtn} onClick={() => setViewMode('letter')}>
                                 ← Back to letter
                             </button>
-                            <button className={styles.sendBtn} onClick={handleSend}>
-                                Send this letter ✦
+                            <button className={styles.sendBtn} onClick={() => setViewMode('chooseSeal')}>
+                                Next: Address & Seal →
                             </button>
                         </div>
                     </div>
                 )}
 
+                {/* ══════════════════════════════════
+                   STEP 2: CHOOSE SEAL (+ Address)
+                   ══════════════════════════════════ */}
+                {viewMode === 'chooseSeal' && (
+                    <div className={styles.envelopeView}>
+                        <div className={styles.envelopeFlowSteps}>
+                            <div className={styles.stepIndicator}>1. Envelope</div>
+                            <div className={`${styles.stepIndicator} ${!sealPressed ? styles.stepActive : ''}`}>2. Address</div>
+                            <div className={`${styles.stepIndicator} ${sealPressed ? styles.stepActive : ''}`}>3. Seal</div>
+                        </div>
+
+                        {/* Envelope preview — CLOSED */}
+                        <div
+                            className={`${styles.envelope} ${styles.envelopeClosed}`}
+                            style={{
+                                background: selectedEnvelope.id === 'custom' && customEnvelopeText
+                                    ? `linear-gradient(135deg, #4a4a4a, #2a2a2a)`
+                                    : selectedEnvelope.bg
+                            }}
+                        >
+                            <div className={styles.envelopeFlap} style={{ borderBottomColor: selectedEnvelope.inner }} />
+                            <div className={styles.envelopeFront}>
+                                <p className={`${styles.envelopeTo} ${isDarkEnvelope() ? styles.envelopeToLight : ''}`}>{recipientName}</p>
+
+                                {/* Stamper animation container */}
+                                <div className={styles.stamperContainer}>
+                                    <div className={`${styles.stamper} ${stamperActive ? styles.stamperPressing : ''}`}>
+                                        <div className={styles.stamperHandle} />
+                                        <div className={styles.stamperHead} style={{ background: selectedStamp.color }}>
+                                            <span>{selectedStamp.symbol}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {sealPressed && (
+                                    <div
+                                        className={`${styles.envelopeSeal} ${styles.sealBloomed}`}
+                                        style={{ background: selectedStamp.color }}
+                                    >
+                                        <span>{selectedStamp.symbol}</span>
+                                    </div>
+                                )}
+                            </div>
+                            <p className={`${styles.envelopeSubtext} ${isDarkEnvelope() ? styles.envelopeSubtextLight : ''}`}>
+                                A letter from you • Arriving in 24 hours
+                            </p>
+                        </div>
+
+                        {/* Recipient contact — like writing an address on the envelope */}
+                        <div className={styles.addressSection}>
+                            <p className={styles.pickerLabel}>Recipient&apos;s Contact</p>
+                            <div className={styles.contactRow}>
+                                <button
+                                    className={`${styles.contactToggle} ${contactType === 'email' ? styles.contactToggleActive : ''}`}
+                                    onClick={() => setContactType('email')}
+                                >
+                                    ✉ Email
+                                </button>
+                                <button
+                                    className={`${styles.contactToggle} ${contactType === 'phone' ? styles.contactToggleActive : ''}`}
+                                    onClick={() => setContactType('phone')}
+                                >
+                                    📱 Phone
+                                </button>
+                            </div>
+                            <input
+                                className={styles.contactInput}
+                                placeholder={contactType === 'email' ? 'name@email.com' : '(555) 123-4567'}
+                                value={recipientContact}
+                                onChange={e => setRecipientContact(e.target.value)}
+                                type={contactType === 'email' ? 'email' : 'tel'}
+                            />
+                        </div>
+
+                        {/* Seal picker */}
+                        <div className={styles.sealPicker}>
+                            <p className={styles.pickerLabel}>Choose Your Wax Seal</p>
+                            <div className={styles.sealRow}>
+                                {STAMPS.map(st => (
+                                    <button
+                                        key={st.id}
+                                        className={`${styles.sealOption} ${selectedStamp.id === st.id ? styles.sealOptionActive : ''}`}
+                                        onClick={() => { setSelectedStamp(st); setSealPressed(false); setStamperActive(false); }}
+                                        style={{ '--stamp-color': st.color } as React.CSSProperties}
+                                    >
+                                        <div className={styles.waxSealPreview} style={{ background: st.color }}>
+                                            <span>{st.symbol}</span>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                            {selectedStamp.isCustom && (
+                                <input
+                                    className={styles.customTextInput}
+                                    placeholder="Enter seal symbol or description..."
+                                    value={customSealText}
+                                    onChange={e => setCustomSealText(e.target.value)}
+                                />
+                            )}
+                        </div>
+
+                        <div className={styles.envelopeActions}>
+                            <button className={styles.backBtn} onClick={() => { setViewMode('chooseEnvelope'); setSealPressed(false); setStamperActive(false); }}>
+                                ← Back to envelope
+                            </button>
+                            {!sealPressed ? (
+                                <button
+                                    className={styles.sendBtn}
+                                    onClick={handleStampSeal}
+                                    disabled={!recipientContact.trim()}
+                                >
+                                    Press Seal ✧
+                                </button>
+                            ) : (
+                                <button className={styles.sendBtn} onClick={handleSend}>
+                                    Send this letter ✦
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* ── Sending Animation ─── */}
                 {viewMode === 'sending' && (
                     <div className={styles.sendingView}>
                         <div className={`${styles.sendingLetter} ${sendPhase >= 0 ? styles.letterFolding : ''}`}>
@@ -419,7 +672,7 @@ export default function CreatePage() {
                             <div className={`${styles.sendingEnvelope} ${sendPhase >= 3 ? styles.envelopeFloating : ''}`}
                                 style={{ background: selectedEnvelope.bg }}>
                                 <div className={styles.sendingEnvelopeFront}>
-                                    <p className={styles.sendingTo}>{recipientName}</p>
+                                    <p className={`${styles.sendingTo} ${isDarkEnvelope() ? styles.envelopeToLight : ''}`}>{recipientName}</p>
                                 </div>
                                 {sendPhase >= 2 && (
                                     <div
@@ -456,17 +709,58 @@ export default function CreatePage() {
                         {STICKERS.map(s => (
                             <div
                                 key={s.id}
-                                className={styles.stickerItem}
-                                draggable
+                                className={`${styles.stickerItem} ${s.type === 'image' ? styles.stickerItemImage : ''}`}
+                                draggable={s.type === 'image'}
                                 onDragStart={() => handleStickerDragStart(s)}
+                                onClick={() => {
+                                    if (s.type === 'custom' || s.type === 'upload') {
+                                        handleStickerDragStart(s);
+                                    }
+                                }}
                                 title={s.label}
                             >
-                                {s.emoji}
+                                {s.type === 'image' ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img src={s.imageUrl} alt={s.label} className={styles.stickerThumbnail} draggable={false} />
+                                ) : (
+                                    <span className={styles.stickerEmoji}>{s.emoji}</span>
+                                )}
+                                <span className={styles.stickerName}>{s.label}</span>
                             </div>
                         ))}
                     </div>
                 )}
             </div>
+
+            {/* ── Custom Sticker Modal ─── */}
+            {showCustomStickerInput && (
+                <div className={styles.customStickerModal} onClick={() => setShowCustomStickerInput(false)}>
+                    <div className={styles.customStickerBox} onClick={e => e.stopPropagation()}>
+                        <p className={styles.customStickerTitle}>Create Custom Sticker</p>
+                        <input
+                            className={styles.customStickerInput}
+                            placeholder="Type your sticker text..."
+                            value={customStickerText}
+                            onChange={e => setCustomStickerText(e.target.value)}
+                            onKeyDown={e => e.key === 'Enter' && handleCustomStickerAdd()}
+                            autoFocus
+                        />
+                        <p className={styles.customStickerHint}>Press Enter or click Add, then drag it onto your letter</p>
+                        <button className={styles.customStickerAddBtn} onClick={handleCustomStickerAdd}>
+                            Add Sticker
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Hidden file input for image upload */}
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleFileUpload}
+            />
 
             {/* ── Stamp Drawer (right side) ─── */}
             <div className={`${styles.stampDrawer} ${stampDrawerOpen ? styles.stampDrawerOpen : ''}`}>
@@ -496,6 +790,13 @@ export default function CreatePage() {
                     </div>
                 )}
             </div>
+
+            {/* Drag hint when dragging a sticker */}
+            {(draggedSticker && viewMode === 'letter') && (
+                <div className={styles.dragHint}>
+                    Drop on your letter ↗
+                </div>
+            )}
         </div>
     );
 }
