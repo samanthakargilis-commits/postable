@@ -1,141 +1,520 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+/* ═══════════════════════════════════════════════════════
+   COTTAGE ENTRANCE — Homepage Scene
+   ═══════════════════════════════════════════════════════ */
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+.scene {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
 }
 
-.main {
-  display: flex;
-  min-height: 100vh;
+/* ── Sky ─── */
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      #0d0d1a 0%,
+      #1a1a3a 20%,
+      #2e2040 40%,
+      #4a2848 55%,
+      #8a4068 70%,
+      #c4736a 82%,
+      #e0a878 90%,
+      #d4a070 100%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: flicker 3s ease-in-out infinite;
+}
+
+/* ── Snow ─── */
+.snowContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: snowfall linear infinite;
+  filter: blur(0.5px);
+}
+
+/* ── Ground ─── */
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28%;
+  background: linear-gradient(to bottom,
+      #c8d8e8 0%,
+      #dfe8f0 30%,
+      #e8eef4 100%);
+  border-radius: 60% 60% 0 0 / 20% 20% 0 0;
+  z-index: 2;
+}
+
+.ground::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+  filter: blur(3px);
+}
+
+/* ── Cottage ─── */
+.cottage {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  transition: transform 1.2s var(--ease-soft), opacity 1.2s var(--ease-soft);
+}
+
+.cottageEntering {
+  transform: translateX(-50%) scale(3);
+  opacity: 0;
+}
+
+/* ── Chimney ─── */
+.chimney {
+  position: absolute;
+  top: -80px;
+  right: 50px;
+  width: 30px;
+  height: 60px;
+  background: linear-gradient(135deg, #6a4a3a, #5a3a2a);
+  border-radius: 2px 2px 0 0;
+  z-index: 3;
+}
+
+.chimney::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  height: 8px;
+  background: linear-gradient(135deg, #7a5a4a, #6a4a3a);
+  border-radius: 2px;
+}
+
+/* Snow on chimney */
+.chimney::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -6px;
+  right: -6px;
+  height: 10px;
+  background: #dfe8f0;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.smoke {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.smokeParticle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: rgba(200, 200, 220, 0.4);
+  border-radius: 50%;
+  animation: driftSmoke 4s ease-out infinite;
+  filter: blur(4px);
+}
+
+/* ── Roof ─── */
+.roof {
+  position: relative;
+  width: 280px;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 90px solid #6a4a3a;
+  z-index: 4;
+  filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.roof::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30px;
+  right: -30px;
+  bottom: -90px;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 90px solid transparent;
+  background: linear-gradient(180deg, #7a5a4a 0%, #5a3828 100%);
+  clip-path: polygon(10.7% 0%, 89.3% 0%, 100% 100%, 0% 100%);
+}
+
+.roofSnow {
+  position: absolute;
+  top: -10px;
+  left: -40px;
+  right: -40px;
+  height: 30px;
+  background: #e0e8f0;
+  clip-path: polygon(12% 100%, 15% 40%, 25% 70%, 35% 30%, 45% 60%, 55% 25%, 65% 55%, 75% 35%, 85% 65%, 88% 100%);
+  filter: blur(0.5px);
+  z-index: 5;
+}
+
+/* ── House Body ─── */
+.houseBody {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  margin: 0 auto;
+  background: linear-gradient(180deg,
+      #e8d8c0 0%,
+      #dccab0 50%,
+      #d0bca0 100%);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Stone texture */
+.houseBody::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 8px 6px at 20px 30px, rgba(0, 0, 0, 0.04) 0%, transparent 100%),
+    radial-gradient(ellipse 10px 7px at 60px 50px, rgba(0, 0, 0, 0.03) 0%, transparent 100%),
+    radial-gradient(ellipse 7px 5px at 120px 80px, rgba(0, 0, 0, 0.04) 0%, transparent 100%),
+    radial-gradient(ellipse 9px 6px at 170px 40px, rgba(0, 0, 0, 0.03) 0%, transparent 100%),
+    radial-gradient(ellipse 8px 5px at 40px 110px, rgba(0, 0, 0, 0.04) 0%, transparent 100%),
+    radial-gradient(ellipse 11px 7px at 150px 120px, rgba(0, 0, 0, 0.03) 0%, transparent 100%);
+  border-radius: 0 0 3px 3px;
+}
+
+/* ── Windows ─── */
+.windowLeft,
+.windowRight {
+  position: absolute;
+  width: 50px;
+  height: 60px;
+  top: 30px;
+}
+
+.windowLeft {
+  left: 25px;
+}
+
+.windowRight {
+  right: 25px;
+}
+
+.windowGlow {
+  position: absolute;
+  inset: -8px;
+  background: radial-gradient(ellipse at center, rgba(240, 200, 112, 0.5) 0%, transparent 70%);
+  animation: warmGlow 4s ease-in-out infinite;
+  transition: all 0.8s var(--ease-soft);
+  border-radius: 4px;
+}
+
+.windowGlowBright {
+  background: radial-gradient(ellipse at center, rgba(240, 200, 112, 0.9) 0%, rgba(240, 180, 80, 0.4) 50%, transparent 70%);
+}
+
+.windowFrame {
+  position: relative;
   width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  padding: 3px;
+  background: #5a4a3a;
+  border-radius: 3px 3px 2px 2px;
+  z-index: 1;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.windowFrame::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -3px;
+  right: -3px;
+  height: 8px;
+  background: #6a5a4a;
+  border-radius: 3px 3px 0 0;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+.windowPane {
+  background: linear-gradient(135deg, rgba(180, 200, 240, 0.3), rgba(240, 200, 112, 0.6));
+  border-radius: 1px;
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.windowBox {
+  position: absolute;
+  bottom: -10px;
+  left: -5px;
+  right: -5px;
+  height: 12px;
+  background: linear-gradient(135deg, #6a5a4a, #5a4a3a);
+  border-radius: 0 0 2px 2px;
+  z-index: 2;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.snowOnBox {
+  position: absolute;
+  top: -4px;
+  left: -2px;
+  right: -2px;
+  height: 8px;
+  background: #dfe8f0;
+  border-radius: 50%;
+  filter: blur(0.5px);
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
+/* ── Door ─── */
+.doorFrame {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 80px;
+  background: #4a3828;
+  border-radius: 6px 6px 0 0;
+  padding: 3px 3px 0 3px;
+  z-index: 3;
+}
+
+.doorWarmLight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center bottom,
+      rgba(240, 200, 112, 0.9) 0%,
+      rgba(240, 180, 80, 0.5) 40%,
+      transparent 80%);
+  border-radius: 6px 6px 0 0;
+  transition: opacity 0.6s var(--ease-soft);
+  z-index: 0;
+}
+
+.door {
+  position: relative;
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
+  height: 100%;
+  background: linear-gradient(180deg, #7a5a3a, #6a4a2a);
+  border-radius: 4px 4px 0 0;
   cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  transition: transform 0.8s var(--ease-soft);
+  transform-origin: left center;
+  z-index: 1;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.door:hover {
+  filter: brightness(1.1);
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.door:active {
+  filter: brightness(0.95);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.doorOpen {
+  transform: perspective(400px) rotateY(-75deg);
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.doorPanel {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+.doorPanel:first-child {
+  top: 10px;
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+.doorPanel:nth-child(2) {
+  top: 42px;
+}
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+.doorKnob {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #c9a84c, #a08030);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+/* ── Porch ─── */
+.porch {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 8px;
+  background: linear-gradient(135deg, #8a7060, #7a6050);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+.porchLight {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 14px;
+  background: linear-gradient(180deg, #4a3828, #3a2818);
+  border-radius: 2px 2px 50% 50%;
+}
+
+.porchLightGlow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(240, 200, 112, 0.4) 0%, transparent 70%);
+  transition: all 0.8s var(--ease-soft);
+}
+
+.porchLightBright {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(240, 200, 112, 0.8) 0%, rgba(240, 180, 80, 0.3) 50%, transparent 70%);
+}
+
+/* ── Garden Path ─── */
+.path {
+  position: absolute;
+  bottom: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 60px;
+  background: linear-gradient(to bottom,
+      rgba(160, 140, 120, 0.6) 0%,
+      rgba(160, 140, 120, 0.2) 100%);
+  clip-path: polygon(30% 0%, 70% 0%, 90% 100%, 10% 100%);
+}
+
+/* ── Title Overlay ─── */
+.titleOverlay {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft);
+}
+
+.titleVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.titleHiding {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 300;
+  color: var(--soft-white);
+  letter-spacing: 0.15em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), 0 0 60px rgba(240, 200, 112, 0.2);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(250, 248, 245, 0.7);
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+}
+
+.prompt {
+  margin-top: 32px;
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  color: rgba(250, 248, 245, 0.5);
+  letter-spacing: 0.15em;
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+.promptIcon {
+  display: inline-block;
+  margin: 0 12px;
+  color: var(--gold);
+  font-size: 0.6em;
+}
+
+.knockFeedback {
+  margin-top: 32px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: rgba(240, 200, 112, 0.8);
+  letter-spacing: 0.1em;
+  animation: fadeIn 0.5s var(--ease-soft);
+}
+
+/* ── Warm Flash (entering transition) ─── */
+.warmFlash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+      rgba(240, 200, 112, 0.95) 0%,
+      rgba(220, 170, 80, 0.9) 40%,
+      rgba(200, 140, 60, 0.8) 100%);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s var(--ease-soft);
+}
+
+.warmFlashActive {
+  opacity: 1;
 }

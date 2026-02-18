@@ -1,0 +1,1186 @@
+/* ═══════════════════════════════════════════════════════
+   WRITING ROOM — Creation Experience
+   "A cozy cottage writing room"
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Room Container ─── */
+.room {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #2a1a10 0%, #3a2818 40%, #2a1a10 100%);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-soft);
+}
+
+.roomLoaded {
+    opacity: 1;
+}
+
+/* ── Vibe-dependent room tints ─── */
+.roomBirthday .roomBg {
+    filter: saturate(1.1) hue-rotate(-5deg);
+}
+
+.roomLove .roomBg {
+    filter: saturate(1.05) hue-rotate(10deg) brightness(0.95);
+}
+
+.roomSympathy .roomBg {
+    filter: saturate(0.8) brightness(0.88);
+}
+
+.roomCongrats .roomBg {
+    filter: saturate(1.15) brightness(1.05);
+}
+
+/* ── Room background / ambience ─── */
+.roomBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    transition: filter 0.8s var(--ease-soft);
+}
+
+/* ── Fireplace ─── */
+.fireplace {
+    position: absolute;
+    left: 3%;
+    bottom: 12%;
+    width: 180px;
+    z-index: 1;
+}
+
+.fireplaceMantel {
+    width: 180px;
+    height: 120px;
+    background: linear-gradient(180deg, #5a4030, #4a3020);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.fireplaceMantel::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -10px;
+    right: -10px;
+    height: 12px;
+    background: linear-gradient(180deg, #6a5040, #5a4030);
+    border-radius: 4px;
+}
+
+.fireBox {
+    position: absolute;
+    bottom: 10px;
+    left: 25px;
+    width: 130px;
+    height: 70px;
+    background: #1a0a00;
+    border-radius: 40px 40px 0 0;
+    overflow: hidden;
+}
+
+.fireGlow {
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(ellipse at bottom center, rgba(240, 140, 40, 0.4) 0%, transparent 60%);
+    animation: flicker 2s ease-in-out infinite;
+}
+
+.flame {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 20px;
+    height: 40px;
+    background: linear-gradient(to top, #ff6020, #ff9930, #ffcc60);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: translateX(-50%);
+    animation: flicker 1.5s ease-in-out infinite;
+    filter: blur(2px);
+}
+
+.flame:nth-child(3) {
+    left: 35%;
+    width: 16px;
+    height: 30px;
+}
+
+.flame:nth-child(4) {
+    left: 65%;
+    width: 14px;
+    height: 35px;
+}
+
+.ember {
+    position: absolute;
+    bottom: 10px;
+    width: 4px;
+    height: 4px;
+    background: #ff8830;
+    border-radius: 50%;
+    animation: float 3s ease-in-out infinite;
+    filter: blur(1px);
+}
+
+/* ── Window ─── */
+.windowScene {
+    position: absolute;
+    right: 3%;
+    top: 10%;
+    width: 200px;
+    height: 240px;
+    background: linear-gradient(180deg, #1a1a3a, #2e2040, #6a4a60);
+    border: 8px solid #5a4030;
+    border-radius: 4px;
+    z-index: 1;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(240, 200, 112, 0.05);
+}
+
+.windowSky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0d0d2a 0%, #1a1a3a 50%, #3a2848 100%);
+}
+
+.windowSky::before {
+    content: '✦';
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 6px;
+    animation: flicker 4s ease-in-out infinite;
+}
+
+.windowSky::after {
+    content: '✦';
+    position: absolute;
+    top: 35%;
+    right: 25%;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 4px;
+    animation: flicker 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.windowScene::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #5a4030;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.windowScene::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #5a4030;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.windowCurtainLeft,
+.windowCurtainRight {
+    position: absolute;
+    top: -8px;
+    width: 40px;
+    height: 260px;
+    background: linear-gradient(180deg, #8a6050, #7a5040);
+    z-index: 3;
+    border-radius: 0 0 4px 4px;
+}
+
+.windowCurtainLeft {
+    left: -18px;
+}
+
+.windowCurtainRight {
+    right: -18px;
+}
+
+/* ── Bookshelf ─── */
+.bookshelf {
+    position: absolute;
+    right: 3%;
+    bottom: 50%;
+    width: 200px;
+    z-index: 1;
+}
+
+.bookRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    padding: 4px 8px;
+    background: linear-gradient(180deg, #5a4030, #4a3020);
+    border-radius: 2px;
+}
+
+.book {
+    width: 16px;
+    min-height: 30px;
+    border-radius: 1px 2px 2px 1px;
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Tea Cup ─── */
+.teaCup {
+    position: absolute;
+    right: 28%;
+    bottom: 28%;
+    width: 30px;
+    height: 24px;
+    background: linear-gradient(180deg, #f5efe6, #e8dcc8);
+    border-radius: 0 0 50% 50%;
+    border: 2px solid #d0bca0;
+    z-index: 3;
+}
+
+.teaCup::before {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 3px;
+    width: 10px;
+    height: 14px;
+    border: 2px solid #d0bca0;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+}
+
+.teaSteam {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.steamLine {
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    animation: driftSmoke 3s ease-out infinite;
+    filter: blur(1px);
+}
+
+.steamLine:nth-child(1) {
+    left: -4px;
+}
+
+.steamLine:nth-child(2) {
+    left: 0;
+}
+
+.steamLine:nth-child(3) {
+    left: 4px;
+}
+
+/* ── AI Art Bird ─── */
+.bird {
+    position: absolute;
+    right: 6%;
+    top: 30%;
+    font-size: 24px;
+    z-index: 5;
+    opacity: 0;
+    transform: translateX(40px) scale(0.8);
+    transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease-bounce);
+    pointer-events: none;
+}
+
+.birdVisible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+/* ── Desk Lamp ─── */
+.deskLamp {
+    position: absolute;
+    left: 20%;
+    top: 18%;
+    width: 20px;
+    height: 60px;
+    z-index: 3;
+}
+
+.deskLamp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(180deg, #6a5040, #5a4030);
+    border-radius: 50% 50% 0 0;
+    clip-path: polygon(20% 100%, 0% 0%, 100% 0%, 80% 100%);
+}
+
+.deskLamp::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 7px;
+    width: 6px;
+    height: 30px;
+    background: linear-gradient(180deg, #5a4030, #4a3020);
+    border-radius: 2px;
+}
+
+.lampGlow {
+    position: absolute;
+    top: 20px;
+    left: -30px;
+    width: 80px;
+    height: 200px;
+    background: radial-gradient(ellipse at top center, rgba(240, 200, 112, 0.15) 0%, transparent 70%);
+    clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    animation: warmGlow 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   VIBE SELECTOR — Left Sidebar
+   ═══════════════════════════════════════ */
+
+.vibeBar {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    padding: 16px 12px;
+    background: rgba(30, 20, 10, 0.85);
+    backdrop-filter: blur(16px);
+    border-radius: 0 16px 16px 0;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-left: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.6s var(--ease-soft) 0.3s both;
+}
+
+.vibeTitle {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(250, 248, 245, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0 4px 8px;
+    border-bottom: 1px solid rgba(250, 248, 245, 0.08);
+    margin-bottom: 4px;
+}
+
+.vibeChip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid rgba(250, 248, 245, 0.06);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    font-family: var(--font-body);
+    white-space: nowrap;
+}
+
+.vibeChip:hover {
+    background: rgba(250, 248, 245, 0.06);
+    border-color: rgba(250, 248, 245, 0.12);
+    transform: translateX(3px);
+}
+
+.vibeChipActive {
+    background: rgba(250, 248, 245, 0.1);
+    border-color: var(--vibe-color);
+    box-shadow: 0 0 16px rgba(201, 168, 76, 0.1), inset 0 0 12px rgba(201, 168, 76, 0.05);
+}
+
+.vibeEmoji {
+    font-size: 1.1rem;
+}
+
+.vibeLabel {
+    font-size: 0.78rem;
+    color: rgba(250, 248, 245, 0.65);
+    font-weight: 400;
+}
+
+.vibeChipActive .vibeLabel {
+    color: rgba(250, 248, 245, 0.9);
+}
+
+/* ═══════════════════════════════════════
+   DESK AREA — Main Canvas
+   ═══════════════════════════════════════ */
+
+.deskArea {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: fadeInUp 0.8s var(--ease-soft) 0.5s both;
+}
+
+/* ── Letter Canvas ─── */
+.letterCanvas {
+    position: relative;
+    width: clamp(360px, 50vw, 560px);
+    height: clamp(440px, 60vh, 640px);
+    border-radius: 4px;
+    padding: 40px 48px;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+    transition: all 0.6s var(--ease-soft);
+    overflow: hidden;
+}
+
+/* Paper texture overlay */
+.letterCanvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 28px,
+            rgba(180, 160, 140, 0.08) 28px,
+            rgba(180, 160, 140, 0.08) 29px);
+    pointer-events: none;
+}
+
+/* Subtle page edge shadow */
+.letterCanvas::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 40px rgba(180, 160, 130, 0.15);
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+.letterCanvasArt {
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 0 30px rgba(201, 168, 76, 0.1);
+}
+
+/* ── AI Art Border ─── */
+.artBorder {
+    position: absolute;
+    inset: 12px;
+    border: 2px solid;
+    border-radius: 2px;
+    pointer-events: none;
+    animation: fadeIn 1s var(--ease-soft);
+    z-index: 1;
+}
+
+.artCorner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    z-index: 2;
+}
+
+.artCorner:nth-child(1) {
+    border-right: none;
+    border-bottom: none;
+}
+
+.artCorner:nth-child(2) {
+    border-left: none;
+    border-bottom: none;
+}
+
+.artCorner:nth-child(3) {
+    border-right: none;
+    border-top: none;
+}
+
+.artCorner:nth-child(4) {
+    border-left: none;
+    border-top: none;
+}
+
+/* ── Letter Header ─── */
+.letterHeader {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.recipientInput {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-handwritten);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--charcoal);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.recipientInput::placeholder {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Text Area ─── */
+.letterTextArea {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.9;
+    color: var(--charcoal);
+    resize: none;
+    position: relative;
+    z-index: 2;
+}
+
+.letterTextArea::placeholder {
+    color: rgba(0, 0, 0, 0.2);
+    font-style: italic;
+}
+
+/* ── Placed Stickers ─── */
+.placedSticker {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s var(--ease-bounce);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+    animation: sealBloom 0.4s var(--ease-bounce);
+}
+
+.placedSticker:hover {
+    transform: translate(-50%, -50%) scale(1.2) !important;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+/* ── Character Count ─── */
+.charCount {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* ── Action Bar ─── */
+.actionBar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.actionBtn {
+    padding: 14px 36px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--soft-white);
+    background: linear-gradient(135deg, var(--deep-plum), var(--deep-plum-light));
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    box-shadow: 0 4px 20px rgba(92, 58, 74, 0.4);
+}
+
+.actionBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(92, 58, 74, 0.5);
+    border-color: rgba(201, 168, 76, 0.5);
+}
+
+.actionBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.actionBtn span {
+    margin-right: 8px;
+}
+
+/* ═══════════════════════════════════════
+   STICKER TIN — Bottom Panel
+   ═══════════════════════════════════════ */
+
+.stickerTin {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    transition: all 0.4s var(--ease-bounce);
+}
+
+.tinLid {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #6a5040, #5a4030);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    color: var(--warm-cream);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+}
+
+.tinLid:hover {
+    background: linear-gradient(135deg, #7a6050, #6a5040);
+}
+
+.tinLabel {
+    letter-spacing: 0.05em;
+}
+
+.tinToggle {
+    font-size: 0.6rem;
+    opacity: 0.5;
+}
+
+.stickerTinOpen .tinLid {
+    border-color: rgba(201, 168, 76, 0.4);
+}
+
+.tinContents {
+    background: linear-gradient(180deg, #4a3020, #3a2010);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 16px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 400px;
+    animation: slideUp 0.3s var(--ease-bounce);
+}
+
+.stickerItem {
+    font-size: 1.8rem;
+    padding: 8px;
+    cursor: grab;
+    transition: all 0.2s var(--ease-bounce);
+    border-radius: 8px;
+    background: rgba(250, 248, 245, 0.04);
+}
+
+.stickerItem:hover {
+    transform: scale(1.2) translateY(-4px);
+    background: rgba(250, 248, 245, 0.08);
+}
+
+.stickerItem:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+}
+
+/* ═══════════════════════════════════════
+   STAMP DRAWER — Right Side
+   ═══════════════════════════════════════ */
+
+.stampDrawer {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+}
+
+.drawerHandle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 8px;
+    background: linear-gradient(180deg, #5a4030, #4a3020);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+    color: var(--warm-cream);
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transition: all 0.3s var(--ease-soft);
+}
+
+.drawerHandle:hover {
+    background: linear-gradient(180deg, #6a5040, #5a4030);
+    padding-left: 12px;
+}
+
+.stampDrawerOpen .drawerHandle {
+    border-color: rgba(201, 168, 76, 0.3);
+}
+
+.drawerContents {
+    position: absolute;
+    right: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: fadeIn 0.3s var(--ease-soft);
+}
+
+.velvetLiner {
+    background: linear-gradient(135deg, #3a1828, #2a0818);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 12px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.stampItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid rgba(250, 248, 245, 0.06);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    font-family: var(--font-display);
+}
+
+.stampItem:hover {
+    background: rgba(250, 248, 245, 0.05);
+    border-color: rgba(250, 248, 245, 0.12);
+    transform: translateY(-2px);
+}
+
+.stampItemActive {
+    background: rgba(250, 248, 245, 0.08);
+    border-color: var(--stamp-color);
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.1);
+}
+
+.waxSeal {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease-bounce);
+}
+
+.stampItem:hover .waxSeal {
+    transform: scale(1.1);
+}
+
+.stampLabel {
+    font-size: 0.75rem;
+    color: rgba(250, 248, 245, 0.5);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   ENVELOPE VIEW
+   ═══════════════════════════════════════ */
+
+.envelopeView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    animation: fadeInUp 0.6s var(--ease-soft);
+}
+
+.envelope {
+    position: relative;
+    width: clamp(320px, 45vw, 480px);
+    height: clamp(200px, 28vh, 300px);
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.envelopeFlap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-left: clamp(160px, 22.5vw, 240px) solid transparent;
+    border-right: clamp(160px, 22.5vw, 240px) solid transparent;
+    border-bottom: 80px solid;
+    z-index: 1;
+}
+
+.envelopeFront {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.envelopeTo {
+    font-family: var(--font-handwritten);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--charcoal);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.envelopeSeal {
+    position: absolute;
+    top: 60px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.3), 0 3px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s var(--ease-bounce);
+}
+
+.envelopeSeal:hover {
+    transform: scale(1.1);
+}
+
+.sealBloomed {
+    animation: sealBloom 0.6s var(--ease-bounce);
+    box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.3), 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.envelopeSubtext {
+    position: absolute;
+    bottom: 16px;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.25);
+    letter-spacing: 0.1em;
+}
+
+/* ── Envelope Style Picker ─── */
+.envelopePicker {
+    text-align: center;
+}
+
+.pickerLabel {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: rgba(250, 248, 245, 0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.pickerRow {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.envelopeOption {
+    width: 40px;
+    height: 28px;
+    border: 2px solid rgba(250, 248, 245, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.envelopeOption:hover {
+    transform: translateY(-2px);
+    border-color: rgba(250, 248, 245, 0.3);
+}
+
+.envelopeOptionActive {
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 12px rgba(201, 168, 76, 0.2);
+}
+
+/* ── Envelope Actions ─── */
+.envelopeActions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.backBtn {
+    padding: 10px 24px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: rgba(250, 248, 245, 0.5);
+    background: transparent;
+    border: 1px solid rgba(250, 248, 245, 0.1);
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+}
+
+.backBtn:hover {
+    color: rgba(250, 248, 245, 0.8);
+    border-color: rgba(250, 248, 245, 0.2);
+}
+
+.sendBtn {
+    padding: 14px 36px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--soft-white);
+    background: linear-gradient(135deg, var(--deep-plum), #7a4a5a);
+    border: 1px solid rgba(201, 168, 76, 0.4);
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+    box-shadow: 0 4px 20px rgba(92, 58, 74, 0.4);
+}
+
+.sendBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(92, 58, 74, 0.5), 0 0 20px rgba(201, 168, 76, 0.15);
+}
+
+/* ═══════════════════════════════════════
+   SENDING ANIMATION
+   ═══════════════════════════════════════ */
+
+.sendingView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    min-height: 400px;
+    justify-content: center;
+}
+
+.sendingLetter {
+    width: 300px;
+    transition: all 1.5s var(--ease-soft);
+}
+
+.letterFolding {
+    animation: letterFold 1.5s var(--ease-soft) forwards;
+    transform-origin: bottom center;
+}
+
+.sendingLetterContent {
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sendingPreview {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    opacity: 0.6;
+    line-height: 1.6;
+}
+
+.sendingEnvelope {
+    width: 320px;
+    height: 200px;
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInUp 0.8s var(--ease-soft);
+    transition: all 2s var(--ease-soft);
+}
+
+.envelopeFloating {
+    animation: envelopeFloat 2s var(--ease-soft) forwards;
+}
+
+.sendingEnvelopeFront {
+    text-align: center;
+}
+
+.sendingTo {
+    font-family: var(--font-handwritten);
+    font-size: 2rem;
+    color: var(--charcoal);
+}
+
+.sendingSeal {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sealBlooming {
+    animation: sealBloom 0.8s var(--ease-bounce);
+}
+
+.sendingStatus {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(250, 248, 245, 0.5);
+    letter-spacing: 0.05em;
+    animation: fadeIn 0.5s var(--ease-soft);
+}
+
+/* ═══════════════════════════════════════
+   SENT SCREEN — "Your letter is on its way"
+   ═══════════════════════════════════════ */
+
+.sentScreen {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #0d0d1a, #1a1a2e);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.sentWindow {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.sentStars div {
+    position: absolute;
+}
+
+.sentStar {
+    background: white;
+    border-radius: 50%;
+    animation: flicker 3s ease-in-out infinite;
+}
+
+.travelingLight {
+    position: absolute;
+    bottom: 40%;
+    right: 20%;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(240, 200, 112, 1) 0%, rgba(240, 200, 112, 0.5) 40%, transparent 70%);
+    border-radius: 50%;
+    animation: float 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(240, 200, 112, 0.6), 0 0 60px rgba(240, 200, 112, 0.2);
+}
+
+.sentContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    animation: fadeInUp 1s var(--ease-soft);
+}
+
+.sentMessage {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 300;
+    color: var(--soft-white);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+}
+
+.sentRecipient {
+    font-family: var(--font-handwritten);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.sentTimer {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: rgba(250, 248, 245, 0.35);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.sentButton {
+    padding: 14px 36px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: rgba(250, 248, 245, 0.6);
+    background: transparent;
+    border: 1px solid rgba(250, 248, 245, 0.15);
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-soft);
+}
+
+.sentButton:hover {
+    color: var(--soft-white);
+    border-color: rgba(201, 168, 76, 0.4);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
+}

@@ -1,42 +1,150 @@
+/* ═══════════════════════════════════════════════════════
+   POSTABLE — Global Design System
+   "A world you enter, not a tool you use."
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Pinyon+Script&family=Inter:wght@300;400;500&family=Caveat:wght@400;500;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Color Palette ─── */
+  --dusty-pink: #d4a0a0;
+  --dusty-pink-light: #e8c7c7;
+  --dusty-pink-dark: #b07878;
+  --sage-green: #9caf88;
+  --sage-green-light: #c5d4b8;
+  --sage-green-dark: #6e8a5a;
+  --warm-cream: #f5efe6;
+  --warm-cream-dark: #e8dcc8;
+  --terracotta: #c67a5c;
+  --terracotta-light: #daa48e;
+  --deep-plum: #5c3a4a;
+  --deep-plum-light: #8a6070;
+  --gold: #c9a84c;
+  --gold-light: #e0cc8a;
+  --ember-orange: #d4873e;
+  --warm-amber: #f0c87040;
+  --night-blue: #1a1a2e;
+  --night-blue-light: #2a2a4e;
+  --charcoal: #3a3a3a;
+  --soft-white: #faf8f5;
+
+  /* ── Typography ─── */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-handwritten: 'Pinyon Script', cursive;
+  --font-casual: 'Caveat', cursive;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Spacing ─── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 64px;
+
+  /* ── Transitions ─── */
+  --ease-soft: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ── Shadows ─── */
+  --shadow-soft: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-warm: 0 4px 30px rgba(201, 168, 76, 0.15);
+  --shadow-deep: 0 8px 40px rgba(0,0,0,0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html,
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--night-blue);
+}
+
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  color: var(--charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* ── Global animation keyframes ─── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+  25% { opacity: 0.92; }
+  75% { opacity: 0.88; }
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+@keyframes driftSmoke {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-40px) translateX(10px) scale(1.3); opacity: 0.3; }
+  100% { transform: translateY(-80px) translateX(-5px) scale(1.6); opacity: 0; }
+}
+
+@keyframes snowfall {
+  0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes warmGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes letterFold {
+  0% { transform: perspective(800px) rotateX(0deg); }
+  100% { transform: perspective(800px) rotateX(-180deg); }
+}
+
+@keyframes sealBloom {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes envelopeFloat {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-100px) translateX(50px) scale(0.8); opacity: 0.8; }
+  100% { transform: translateY(-300px) translateX(200px) scale(0.3); opacity: 0; }
 }
